@@ -18,6 +18,8 @@
 		<!--		<spring-boot.version>2.7.5</spring-boot.version>-->
 		<!--		<sonar.host.url>http://localhost:9000</sonar.host.url>-->
 		<!--		<sonar.login>a675dc595ebd7af737542974080e942c3d397609</sonar.login>-->
+		<sonar.organization>enginnering-d</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 	<dependencies>
 		<dependency>
