@@ -1,0 +1,47 @@
+#version: "3.8"
+#
+#services:
+#  mongodb:
+#    image: mongo:6.0
+#    container_name: mongodb
+#    ports:
+#      - "27018:27017"
+#    environment:
+#      MONGO_INITDB_ROOT_USERNAME: root
+#      MONGO_INITDB_ROOT_PASSWORD: password
+#    volumes:
+#      - mongo_data:/data/db
+#
+#volumes:
+#  mongo_data:
+
+
+version: "3.8"
+
+services:
+  mongodb:
+    image: mongo:6.0
+    container_name: mongodb
+    ports:
+      - "27018:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: journaldb  # Default database to initialize
+    volumes:
+      - mongo_data:/data/db
+    command: >
+      bash -c '
+      mongod --bind_ip_all --auth &&
+      mongosh --eval "
+        db = db.getSiblingDB(\"journaldb\");
+        db.createUser({
+          user: \"springuser\",
+          pwd: \"springpassword\",
+          roles: [{ role: \"readWrite\", db: \"journaldb\" }]
+        });
+      "
+      '
+
+volumes:
+  mongo_data:
